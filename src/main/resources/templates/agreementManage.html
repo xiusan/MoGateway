@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>协议管理</title>
+
+<link href="css/font-awesome.min.css" rel="stylesheet">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+<link href="css/animate.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="css/plugins/webuploader/webuploader.css">
+<link href="css/style.min.css" rel="stylesheet">
+<link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+<link href="css/local/common.css" rel="stylesheet">
+
+<script src="../js/cron/jquery.min.js"></script>
+<script src="../js/cron/bootstrap.min.js"></script>
+<script src="js/plugins/jeditable/jquery.jeditable.js"></script>
+<script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+<script src="js/content.min.js"></script>
+<script src="../js/plugins/layer/laydate/laydate.js"></script>
+<script src="js/plugins/layer/layer.min.js"></script>
+<script src="js/plugins/peity/jquery.peity.min.js"></script>
+<script src="js/plugins/iCheck/icheck.min.js"></script>
+<script src="js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+<script src="js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+<script src="js/plugins/webuploader/webuploader.min.js"></script>
+<script src="js/plugins/validate/jquery.validate.min.js"></script>
+<script src="js/plugins/validate/messages_zh.min.js"></script>
+<script src="js/local/common/common.js"></script>
+<script src="js/local/common/const.js"></script>
+<script src="js/local/common/messageContent.js"></script>
+<script src="js/local/common/tableColumn.js"></script>
+<script src="js/local/agreementManage/agreementManage.js"></script>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="table_data_tables.html#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li><a href="table_data_tables.html#">选项1</a>
+                            </li>
+                            <li><a href="table_data_tables.html#">选项2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                    <button type="button" id="start" onclick="initLayer('start')" class="btn btn-w-m btn-success btn-local">启&nbsp;用</button>
+                    <button type="button" id="stop" onclick="initLayer('stop')" class="btn btn-w-m btn-success btn-local">禁&nbsp;用</button>
+                    <button type="button" onclick="addAgreement()" class="btn btn-w-m btn-success btn-local">添&nbsp;加</button>
+                    <button type="button" id="delete" onclick="initLayer('delete')" class="btn btn-w-m btn-success btn-local">删&nbsp;除</button>
+                </div>
+                <div class="ibox-content">
+                    <table class="footable table table-stripped toggle-arrow-tiny" id="agreementTable" ></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--添加彈出框-->
+<div class="modal inmodal" id="addAgreementModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header modal-local">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">添加协议类型</h4>
+            </div>
+            <div class="modal-body">
+                <form id="addAgreementForm" class="form-horizontal">
+                    <div id="agreementUploader" class="form-group">
+                        <label>文件</label>
+                        <div id="picker">选择文件</div>
+                        <div id="fileList" class="uploader-list"></div>
+                    </div>
+                    <div class="form-group">
+                        <label>ID</label>
+                        <input id="agreementID" name="agreementID" autocomplete="off" type="text" class="form-control" required="" aria-required="true">
+                    </div>
+                    <div class="form-group">
+                        <label>名称</label>
+                        <input id="agreementName" name="agreementName" autocomplete="off" type="text" class="form-control">
+                    </div>
+                    <!--<div class="form-group">
+                        <label>sub通道</label>
+                        <input id="agreementSubChannel" name="agreementSubChannel" autocomplete="off" type="text" class="form-control" required="" aria-required="true">
+                    </div>
+                    <div class="form-group">
+                        <label>pub通道</label>
+                        <input id="agreementPubChannel" name="agreementPubChannel" autocomplete="off" type="text" class="form-control" required="" aria-required="true">
+                    </div>-->
+                    <div class="form-group">
+                        <label>访问地址</label>
+                        <input id="agreementHomeUrl" name="agreementHomeUrl" autocomplete="off" type="text" class="form-control" required="" aria-required="true">
+                    </div>
+                    <!--<div class="form-group">
+                        <label>是否启用</label>
+                        <select id="enabled" name="enabled" class="form-control m-b" required="" aria-required="true">
+                            <option selected="selected" value="0">启用</option>
+                            <option value="1">禁用</option>
+                        </select>
+                    </div>-->
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="confirmAdd()" class="btn btn-primary">保存</button>
+                <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>云地址</title>
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min.css" rel="stylesheet">
+    <script src="../js/cron/bootstrap.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/content.min.js"></script>
+    <script src="/js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="/js/plugins/validate/messages_zh.min.js"></script>
+    <script src="js/local/data/cloud_address_manager.js"></script>
+
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight" style="height: 90%;background-color: #fff;">
+    <div class="row">
+
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>云平台地址管理</h5>
+                    <div class="ibox-tools">
+
+
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <form class="form-horizontal m-t" id="signupForm">
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">科佳云地址：</label>
+                            <div class="col-sm-8">
+                                <input id="kjCloudAddress" name="kjCloudAddress" class="form-control" type="text" aria-required="true" aria-invalid="false" class="valid">
+                                <input id="cloudId" name="cloudId" class="form-control" type="hidden" aria-required="true" aria-invalid="false" class="valid">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">客户云地址：</label>
+                            <div class="col-sm-8">
+                                <input id="customerCloudAddress" name="customerCloudAddress" class="form-control" type="text" aria-required="true" aria-invalid="true" class="error">
+                            </div>
+                        </div>
+                        <!--
+                                                <div class="form-group">
+                            <label class="col-sm-3 control-label">是否开启同步：</label>
+                            <div class="col-sm-8">
+                                <input id="isSynchronization1" name="isSynchronization" class="form-control" type="radio"  checked="" value="1" aria-required="true" aria-invalid="true" class="error">是
+                                <input id="isSynchronization2" name="isSynchronization" class="form-control" type="radio"  value="0" aria-required="true" aria-invalid="true" class="error">否
+                            </div>
+                        </div>
+
+                        -->
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">是否忽略证书：</label>
+                            <div class="col-sm-8">
+                                <input id="isCertificate1" name="isCertificate" class="form-control" type="radio"  checked="" value="1" aria-required="true" aria-invalid="true" class="error">是
+                                <input id="isCertificate2" name="isCertificate" class="form-control" type="radio"  value="0" aria-required="true" aria-invalid="true" class="error">否
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-8 col-sm-offset-3">
+                               <!--
+                               <button class="btn btn-primary" type="button" onclick="addCloudAddressManager()">提交</button>
+                               -->
+                                <button class="btn btn-primary" type="button" onclick="putCloudAddressManager()">提交</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    //查询云地址信息
+    $(function(){
+        queryCloudAddressManager();
+    })
+</script>
+</body>
+
+</html>

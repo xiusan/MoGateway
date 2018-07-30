@@ -1,0 +1,61 @@
+spring:
+  application:
+    name: data-multidatasource
+  http:
+    multipart:
+      maxFileSize: 50Mb
+      maxRequestSize: 50Mb
+  datasource:
+      driver-class-name: com.mysql.jdbc.Driver
+      #url: jdbc:mysql://1127.0.0.1:3306/servicegateway?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+      #username: root
+      #password: kj2016
+
+      url: jdbc:mysql://127.0.0.1:3306/servicegateway?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+      username: root
+      password: app
+
+#      url: jdbc:mysql://10.0.210.102:3306/servicegatewaytest?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+#      username: root
+#      password: kj2016
+
+      #url: jdbc:mysql://192.168.1.96:3306/servicegateway?useUnicode=true&characterEncoding=utf8&useSSL=false
+      #username: gateway
+      #password: 2018@gateway
+
+#      url: jdbc:mysql://10.0.0.123:3306/servicegateway?useUnicode=true&characterEncoding=utf8&useSSL=false
+#      username: gateway
+#      password: 2018@gateway
+
+      type: com.alibaba.druid.pool.DruidDataSource
+      sql-script-encoding: utf-8
+      filters: stat
+      maxActive: 100
+      initialSize: 10
+      maxWait: 10000
+      minIdle: 5
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: select 1
+      testWhileIdle: true
+      testOnBorrow: true
+      testOnReturn: false
+      poolPreparedStatements: false
+      maxOpenPreparedStatements: 20
+#      filters: stat,wall,log4j2
+#      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+#      useGlobalDataSourceStat: true
+  redis:
+    address: /home/temp/redis/redis.conf
+    logSubChannel: kjtc_log
+    eventSubChannel: kjtc_event
+    chargeRecordSubChannel: charging_record_channel
+    processSubChannel: kjtc_pcrocess
+    realTimeSubChannel: realTime_sub_channel
+    cloudResponseChannel: kjtc_cloud_response
+    stationResponseChannel: station_response_channel
+
+log_path:  /home/temp/logs
+
+server:
+  port: 80

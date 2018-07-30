@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mogateway.mapper.SerialConfigMapper">
+  <resultMap id="BaseResultMap" type="com.mogateway.entity.SerialConfig">
+    <id column="serial_name" jdbcType="VARCHAR" property="serialName" />
+    <result column="serial_baud_rate" jdbcType="INTEGER" property="serialBaudRate" />
+    <result column="serial_checkout_id" jdbcType="BIT" property="serialCheckoutId" />
+    <result column="create_dttm" jdbcType="TIMESTAMP" property="createDttm" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="update_dttm" jdbcType="TIMESTAMP" property="updateDttm" />
+    <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    serial_name, serial_baud_rate, serial_checkout_id, create_dttm, create_user, update_dttm, 
+    update_user
+  </sql>
+  <select id="selectByExample" parameterType="com.mogateway.entity.SerialConfigCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from serial_config
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from serial_config
+    where serial_name = #{serialName,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from serial_config
+    where serial_name = #{serialName,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mogateway.entity.SerialConfigCriteria">
+    delete from serial_config
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mogateway.entity.SerialConfig">
+    insert into serial_config (serial_name, serial_baud_rate, serial_checkout_id, 
+      create_dttm, create_user, update_dttm, 
+      update_user)
+    values (#{serialName,jdbcType=VARCHAR}, #{serialBaudRate,jdbcType=INTEGER}, #{serialCheckoutId,jdbcType=BIT}, 
+      #{createDttm,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR}, #{updateDttm,jdbcType=TIMESTAMP}, 
+      #{updateUser,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mogateway.entity.SerialConfig">
+    insert into serial_config
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="serialName != null">
+        serial_name,
+      </if>
+      <if test="serialBaudRate != null">
+        serial_baud_rate,
+      </if>
+      <if test="serialCheckoutId != null">
+        serial_checkout_id,
+      </if>
+      <if test="createDttm != null">
+        create_dttm,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="updateDttm != null">
+        update_dttm,
+      </if>
+      <if test="updateUser != null">
+        update_user,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="serialName != null">
+        #{serialName,jdbcType=VARCHAR},
+      </if>
+      <if test="serialBaudRate != null">
+        #{serialBaudRate,jdbcType=INTEGER},
+      </if>
+      <if test="serialCheckoutId != null">
+        #{serialCheckoutId,jdbcType=BIT},
+      </if>
+      <if test="createDttm != null">
+        #{createDttm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDttm != null">
+        #{updateDttm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mogateway.entity.SerialConfigCriteria" resultType="java.lang.Long">
+    select count(*) from serial_config
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update serial_config
+    <set>
+      <if test="record.serialName != null">
+        serial_name = #{record.serialName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serialBaudRate != null">
+        serial_baud_rate = #{record.serialBaudRate,jdbcType=INTEGER},
+      </if>
+      <if test="record.serialCheckoutId != null">
+        serial_checkout_id = #{record.serialCheckoutId,jdbcType=BIT},
+      </if>
+      <if test="record.createDttm != null">
+        create_dttm = #{record.createDttm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createUser != null">
+        create_user = #{record.createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateDttm != null">
+        update_dttm = #{record.updateDttm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateUser != null">
+        update_user = #{record.updateUser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update serial_config
+    set serial_name = #{record.serialName,jdbcType=VARCHAR},
+      serial_baud_rate = #{record.serialBaudRate,jdbcType=INTEGER},
+      serial_checkout_id = #{record.serialCheckoutId,jdbcType=BIT},
+      create_dttm = #{record.createDttm,jdbcType=TIMESTAMP},
+      create_user = #{record.createUser,jdbcType=VARCHAR},
+      update_dttm = #{record.updateDttm,jdbcType=TIMESTAMP},
+      update_user = #{record.updateUser,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mogateway.entity.SerialConfig">
+    update serial_config
+    <set>
+      <if test="serialBaudRate != null">
+        serial_baud_rate = #{serialBaudRate,jdbcType=INTEGER},
+      </if>
+      <if test="serialCheckoutId != null">
+        serial_checkout_id = #{serialCheckoutId,jdbcType=BIT},
+      </if>
+      <if test="createDttm != null">
+        create_dttm = #{createDttm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDttm != null">
+        update_dttm = #{updateDttm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        update_user = #{updateUser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where serial_name = #{serialName,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mogateway.entity.SerialConfig">
+    update serial_config
+    set serial_baud_rate = #{serialBaudRate,jdbcType=INTEGER},
+      serial_checkout_id = #{serialCheckoutId,jdbcType=BIT},
+      create_dttm = #{createDttm,jdbcType=TIMESTAMP},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      update_dttm = #{updateDttm,jdbcType=TIMESTAMP},
+      update_user = #{updateUser,jdbcType=VARCHAR}
+    where serial_name = #{serialName,jdbcType=VARCHAR}
+  </update>
+</mapper>

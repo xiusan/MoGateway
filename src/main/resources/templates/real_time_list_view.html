@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实时状态</title>
+    <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <!-- Data Tables -->
+    <link href="css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min.css" rel="stylesheet">
+    <script src="../js/cron/jquery.min.js"></script>
+    <script src="../js/cron/bootstrap.min.js"></script>
+    <script src="js/plugins/jeditable/jquery.jeditable.js"></script>
+    <script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+    <script src="js/content.min.js?v=1.0.0"></script>
+    <script src="js/local/realTime/realTime.js"></script>
+    <script src="js/local/equipment/equipment.js"></script>
+    <script src="../js/plugins/layer/laydate/laydate.js"></script>
+    <script src="js/plugins/iCheck/icheck.min.js"></script>
+    <script src="js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+    <script src="js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12" style="height: 1500px;background-color:white">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>基本 <small>分类，查找</small></h5>
+                    <div class="ibox-tools">
+
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="ibox-content" >
+                    <div class="col-sm-12" >
+                        <form>
+
+                            <a style="margin-right:20px;" class="btn btn-w-m btn-success" href="/realTimeList">切换视图</a>
+                        </form>
+                        <div class="ibox-title">
+                        </div>
+                    </div>
+                    <div class="col-sm-12" >
+                        <div id="realTimes" class="realTimes">
+                            <ul style="list-style-type:none"><!--总共9个-->
+                                <!--
+                                <li style="width: 600px;height: 250px;background-color: #F0F9FF;float: left;margin-top: 20px;margin-left: 20px">
+                                    <p style="width: 600px;float: left">
+                                    <h3 class="equipmentNo" style="float: left"><label >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1#号桩</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h3>
+                                    <h3 class="communicateStatus" style="float: left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;通讯状态:&nbsp;&nbsp;&nbsp; <label  style="color: #1BBB9E">正常</label></h3>
+                                    <h3 class="workStatus" style="float: left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;工作状态:&nbsp;&nbsp;&nbsp;<label  style="color: #1BBB9E">充电中</label></h3>
+                                    <h3 class="chargingGunStatus" style="float: left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;枪连接状态:&nbsp;&nbsp;&nbsp;<label class="chargingGunStatus" style="color: #1BBB9E">已连接</label></h3>
+                                    <h3 class="faultStatus" style="float: left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;故障状态:&nbsp;&nbsp;&nbsp;<label >无</label></h3>
+                                    </p>
+                                    <p style="width: 600px;margin-top: 20px;float: left">
+                                    <h3  class="chargedKwh"  style="float: left"><label style="color: #1BBB9E">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;89%</label><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="/img/real_time/aftercharge.png">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h3>
+                                    <h3 class="outputVoltage" style="float: left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;电压(V):&nbsp;&nbsp;&nbsp;<label  style="color: #1f90d8">220</label></h3>
+                                    <h3  class="startChargingDttm" style="float: left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;开始时间:&nbsp;&nbsp;&nbsp;<label style="color: #1f90d8">10:00:00</label></h3>
+                                    <h3 class="chargedTime" style="float: left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;已充时间:&nbsp;&nbsp;&nbsp;<label style="color: #1f90d8">23分15秒</label></h3>
+                                    <h3 class="outputCurrent" style="float: left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;电流(A):&nbsp;&nbsp;&nbsp;<label  style="color: #1f90d8">156</label></h3>
+                                    <h3 class="startChargingAmmeterNo" style="float: left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;开始表数:&nbsp;&nbsp;&nbsp;<label  style="color: #1f90d8">356331</label></h3>
+                                    <h3 class="chargedKwh" style="float: left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;已充电量:&nbsp;&nbsp;&nbsp;<label style="color: #1f90d8">36</label></h3>
+                                    <h3 class="outputPower" style="float: left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;功率(KW):&nbsp;&nbsp;&nbsp;<label  style="color: #1f90d8">698</label></h3>
+                                    </p>
+                                </li>
+-->
+                            </ul>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+
+     $(function(){
+         realTimeList();
+    })
+
+
+
+</script>
+
+</body>
+
+</html>

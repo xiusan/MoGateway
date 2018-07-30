@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>充电站管理</title>
+
+    <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../css/bootstrap/bootstrap-table.min.css" rel="stylesheet"/>
+    <link href="../css/bootstrap/bootstrap-select.min.css" rel="stylesheet"/>
+    <link href="../css/other/font-awesome.min.css" rel="stylesheet"/>
+    <link href="../css/other/animate.min.css" rel="stylesheet"/>
+    <link href="../css/other/style.min.css?v=4.1.0" rel="stylesheet"/>
+    <link href="../css/plugins/iCheck/custom.css" rel="stylesheet"/>
+    <link href="../css/plugins/sweetalert/sweetalert.css" rel="stylesheet"/>
+    <link href="../css/select.css" rel="stylesheet"/>
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>充电站管理</h5>
+                </div>
+                <div class="ibox-content">
+                    <!-- 查询工具栏 -->
+                    <button type="button" class="btn btn-primary btn-sm" onclick="showSave()">
+                        <img src="../images/add_btn.png" height="16" width="16"/> 添加
+                    </button>
+                    <!--<button type="button" class="btn btn-primary btn-sm" onclick="showSave(1)">
+                        <img src="../images/edit_btn.png" height="16" width="16"/> 修改
+                    </button>-->
+                    <button type="button" class="btn btn-primary btn-sm" onclick="delConfirm()">
+                        <img src="../images/delete_btn.png" height="16" width="16"/> 删除
+                    </button>
+                    <table id="operatorInfoTable"></table>
+                    <!--  添加框 -->
+
+                    <div class="modal inmodal" id="save" tabindex="-1" data-backdrop="static" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content animated bounceInRight">
+                                <div class="modal-header">
+                                    <button type="button" class="close" onclick="closeSave()">
+                                        <span aria-hidden="true">&times;</span>
+                                        <span class="sr-only">关闭</span>
+                                    </button>
+                                    <h4 class="modal-title">充电站管理添加</h4>
+                                </div>
+                                <div class="modal-footer" style="text-align: left">
+                                    <form id="saveForm">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label for="chargingStationName">名称</label>
+                                                    <input id="chargingStationName" name="chargingStationName" type="text" required="" class="form-control" minlength="1" maxlength="50" placeholder="名称" title="名称"/>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label for="operatorName">所属运营商</label>
+                                                    <select id="operatorName" name="operatorName" type="text" required="" class="form-control"  minlength="1" maxlength="10" placeholder="所属运营商" title="所属运营商"   ></select>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6" >
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label for="countryCode">国家代码</label>
+                                                    <input id="countryCode" name="countryCode" type="text" required="" class="form-control"  minlength="1" maxlength="2" placeholder="国家代码" title="国家代码"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label for="areaCode">省市辖区</label>
+                                                    <input id="areaCode" name="areaCode" type="text" class="form-control"  minlength="1"  maxlength="20"  placeholder="省市辖区" title="省市辖区"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label for="chargingStationAddr">详细地址</label>
+                                                    <input id="chargingStationAddr" name="chargingStationAddr" type="text" class="form-control"  minlength="1"  maxlength="50" placeholder="详细地址" title="详细地址"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label for="chargingStationTel">站点电话</label>
+                                                    <input id="chargingStationTel" name="chargingStationTel" type="text" class="form-control"  minlength="1"  maxlength="30" placeholder="站点电话" title="站点电话"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label for="stationTypeName">站点类型</label>
+                                                    <select id="stationTypeName" name="stationTypeName" type="text" class="form-control"  minlength="1"   maxlength="10" placeholder="站点类型" title="站点类型"  ></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label for="stationStatusName">站点状态</label>
+
+                                                    <select id="stationStatusName" name="stationStatusName" type="text" class="form-control"  minlength="1"  maxlength="10" placeholder="站点状态" title="站点状态" ></select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label for="parkNums">车位数量</label>
+                                                    <input id="parkNums" name="parkNums" type="text" class="form-control"  minlength="1"  maxlength="11" placeholder="车位数量" title="车位数量"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label for="chargingStationLng">经度</label>
+                                                    <input id="chargingStationLng" name="chargingStationLng" type="text" class="form-control"  minlength="1"  maxlength="255" placeholder="经度" title="经度"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label for="chargingStationLat">维度</label>
+                                                    <input id="chargingStationLat" name="chargingStationLat" type="text" class="form-control"  minlength="1"  maxlength="255" placeholder="维度" title="维度"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label for="siteGuide">站点引导</label>
+                                                    <input id="siteGuide" name="siteGuide" type="text" class="form-control"  minlength="1"  maxlength="100" placeholder="站点引导" title="站点引导"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label for="constructionName">建设场所</label>
+                                                        <select name="constructionName"  class="form-control"  id="constructionName"  minlength="1"  maxlength="100"  ></select>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label for="supportOrder">是否支持预约</label>
+                                                        <select id="supportOrder"   class="form-control"   required=""    name="supportOrder">
+                                                            <option  value="1">是</option>
+                                                            <option  value="0">否</option>
+                                                        </select>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label for="remark">备注</label>
+                                                    <input id="remark" name="remark" type="text" class="form-control" maxlength="255" placeholder="备注" title="备注"/>
+                                                    <input id="chargingStationId" name="chargingStationId" type="hidden"   />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12" style="text-align: right">
+                                            <button type="button" class="btn" onclick="closeSave()">
+                                                <img src="../images/close_btn.png" height="16" width="16"/> 关闭
+                                            </button>
+                                            <button type="button" class="btn btn-primary" onclick="save()">
+                                                <img src="../images/save_btn.png" height="16" width="16"/> 保存
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../js/cron/jquery.min.js"></script>
+
+<script src="../js/cron/bootstrap.min.js"></script>
+<script src="../js/bootstrap/bootstrap-table.js"></script>
+<script src="../js/bootstrap/bootstrap-table-zh-CN.min.js"></script>
+<script src="../js/bootstrap/bootstrap-select.min.js"></script>
+
+<script src="../js/plugins/iCheck/icheck.min.js"></script>
+<script src="../js/plugins/layer/laydate/laydate.js"></script>
+<script src="../js/plugins/layer/layer.min.js"></script>
+<script src="../js/plugins/sweetalert/sweetalert.min.js"></script>
+<script src="../js/plugins/sweetalert/sweetalert-dev.js"></script>
+
+<script src="../js/other/content.min.js?v=1.0.0"></script>
+<script src="../js/other/contabs.min.js"></script>
+
+<script src="../js/common.js"></script>
+<script src="../js/local/common/messageContent.js"></script>
+
+<script src="../js/chargingstation/chargingstation.js"></script>
+<script src="../js/chargingstation/chargingstationOperate.js"></script>
+
+
+</body>
+
+</html>

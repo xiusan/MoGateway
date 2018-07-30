@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mogateway.mapper.TaskMapper">
+  <resultMap id="BaseResultMap" type="com.mogateway.entity.Task">
+    <id column="timed_task_id" jdbcType="VARCHAR" property="timedTaskId" />
+    <result column="timed_task_name" jdbcType="VARCHAR" property="timedTaskName" />
+    <result column="last_execu_time" jdbcType="TIMESTAMP" property="lastExecuTime" />
+    <result column="next_execu_time" jdbcType="TIMESTAMP" property="nextExecuTime" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="stop_time" jdbcType="TIMESTAMP" property="stopTime" />
+    <result column="task_method" jdbcType="VARCHAR" property="taskMethod" />
+    <result column="cron_expression" jdbcType="VARCHAR" property="cronExpression" />
+    <result column="execu_count" jdbcType="INTEGER" property="execuCount" />
+    <result column="fail_count" jdbcType="INTEGER" property="failCount" />
+    <result column="miss_count" jdbcType="INTEGER" property="missCount" />
+    <result column="execu_cycle" jdbcType="INTEGER" property="execuCycle" />
+    <result column="cycle" jdbcType="INTEGER" property="cycle" />
+    <result column="task_status" jdbcType="INTEGER" property="taskStatus" />
+    <result column="create_user_id" jdbcType="VARCHAR" property="createUserId" />
+    <result column="creadate" jdbcType="TIMESTAMP" property="creadate" />
+    <result column="update_user_id" jdbcType="VARCHAR" property="updateUserId" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="job_group_name" jdbcType="VARCHAR" property="jobGroupName" />
+    <result column="method" jdbcType="VARCHAR" property="method" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    timed_task_id, timed_task_name, last_execu_time, next_execu_time, start_time, stop_time, 
+    task_method, cron_expression, execu_count, fail_count, miss_count, execu_cycle, cycle, 
+    task_status, create_user_id, creadate, update_user_id, update_date, job_group_name, 
+    method
+  </sql>
+  <select id="selectByExample" parameterType="com.mogateway.entity.TaskCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from task
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from task
+    where timed_task_id = #{timedTaskId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from task
+    where timed_task_id = #{timedTaskId,jdbcType=VARCHAR}
+  </delete>
+
+  <delete id="deleteByPrimaryJobGroupName" parameterType="java.lang.String">
+    delete from task
+    where job_group_name = #{jobGroupName,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mogateway.entity.TaskCriteria">
+    delete from task
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mogateway.entity.Task">
+    insert into task (timed_task_id, timed_task_name, last_execu_time, 
+      next_execu_time, start_time, stop_time, 
+      task_method, cron_expression, execu_count, 
+      fail_count, miss_count, execu_cycle, 
+      cycle, task_status, create_user_id, 
+      creadate, update_user_id, update_date, 
+      job_group_name, method)
+    values (#{timedTaskId,jdbcType=VARCHAR}, #{timedTaskName,jdbcType=VARCHAR}, #{lastExecuTime,jdbcType=TIMESTAMP}, 
+      #{nextExecuTime,jdbcType=TIMESTAMP}, #{startTime,jdbcType=TIMESTAMP}, #{stopTime,jdbcType=TIMESTAMP}, 
+      #{taskMethod,jdbcType=VARCHAR}, #{cronExpression,jdbcType=VARCHAR}, #{execuCount,jdbcType=INTEGER}, 
+      #{failCount,jdbcType=INTEGER}, #{missCount,jdbcType=INTEGER}, #{execuCycle,jdbcType=INTEGER}, 
+      #{cycle,jdbcType=INTEGER}, #{taskStatus,jdbcType=INTEGER}, #{createUserId,jdbcType=VARCHAR}, 
+      #{creadate,jdbcType=TIMESTAMP}, #{updateUserId,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{jobGroupName,jdbcType=VARCHAR}, #{method,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mogateway.entity.Task">
+    insert into task
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="timedTaskId != null">
+        timed_task_id,
+      </if>
+      <if test="timedTaskName != null">
+        timed_task_name,
+      </if>
+      <if test="lastExecuTime != null">
+        last_execu_time,
+      </if>
+      <if test="nextExecuTime != null">
+        next_execu_time,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="stopTime != null">
+        stop_time,
+      </if>
+      <if test="taskMethod != null">
+        task_method,
+      </if>
+      <if test="cronExpression != null">
+        cron_expression,
+      </if>
+      <if test="execuCount != null">
+        execu_count,
+      </if>
+      <if test="failCount != null">
+        fail_count,
+      </if>
+      <if test="missCount != null">
+        miss_count,
+      </if>
+      <if test="execuCycle != null">
+        execu_cycle,
+      </if>
+      <if test="cycle != null">
+        cycle,
+      </if>
+      <if test="taskStatus != null">
+        task_status,
+      </if>
+      <if test="createUserId != null">
+        create_user_id,
+      </if>
+      <if test="creadate != null">
+        creadate,
+      </if>
+      <if test="updateUserId != null">
+        update_user_id,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="jobGroupName != null">
+        job_group_name,
+      </if>
+      <if test="method != null">
+        method,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="timedTaskId != null">
+        #{timedTaskId,jdbcType=VARCHAR},
+      </if>
+      <if test="timedTaskName != null">
+        #{timedTaskName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastExecuTime != null">
+        #{lastExecuTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nextExecuTime != null">
+        #{nextExecuTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stopTime != null">
+        #{stopTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taskMethod != null">
+        #{taskMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="cronExpression != null">
+        #{cronExpression,jdbcType=VARCHAR},
+      </if>
+      <if test="execuCount != null">
+        #{execuCount,jdbcType=INTEGER},
+      </if>
+      <if test="failCount != null">
+        #{failCount,jdbcType=INTEGER},
+      </if>
+      <if test="missCount != null">
+        #{missCount,jdbcType=INTEGER},
+      </if>
+      <if test="execuCycle != null">
+        #{execuCycle,jdbcType=INTEGER},
+      </if>
+      <if test="cycle != null">
+        #{cycle,jdbcType=INTEGER},
+      </if>
+      <if test="taskStatus != null">
+        #{taskStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createUserId != null">
+        #{createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="creadate != null">
+        #{creadate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null">
+        #{updateUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jobGroupName != null">
+        #{jobGroupName,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null">
+        #{method,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mogateway.entity.TaskCriteria" resultType="java.lang.Long">
+    select count(*) from task
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update task
+    <set>
+      <if test="record.timedTaskId != null">
+        timed_task_id = #{record.timedTaskId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.timedTaskName != null">
+        timed_task_name = #{record.timedTaskName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastExecuTime != null">
+        last_execu_time = #{record.lastExecuTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.nextExecuTime != null">
+        next_execu_time = #{record.nextExecuTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.startTime != null">
+        start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.stopTime != null">
+        stop_time = #{record.stopTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.taskMethod != null">
+        task_method = #{record.taskMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cronExpression != null">
+        cron_expression = #{record.cronExpression,jdbcType=VARCHAR},
+      </if>
+      <if test="record.execuCount != null">
+        execu_count = #{record.execuCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.failCount != null">
+        fail_count = #{record.failCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.missCount != null">
+        miss_count = #{record.missCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.execuCycle != null">
+        execu_cycle = #{record.execuCycle,jdbcType=INTEGER},
+      </if>
+      <if test="record.cycle != null">
+        cycle = #{record.cycle,jdbcType=INTEGER},
+      </if>
+      <if test="record.taskStatus != null">
+        task_status = #{record.taskStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.createUserId != null">
+        create_user_id = #{record.createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creadate != null">
+        creadate = #{record.creadate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateUserId != null">
+        update_user_id = #{record.updateUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateDate != null">
+        update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.jobGroupName != null">
+        job_group_name = #{record.jobGroupName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.method != null">
+        method = #{record.method,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update task
+    set timed_task_id = #{record.timedTaskId,jdbcType=VARCHAR},
+      timed_task_name = #{record.timedTaskName,jdbcType=VARCHAR},
+      last_execu_time = #{record.lastExecuTime,jdbcType=TIMESTAMP},
+      next_execu_time = #{record.nextExecuTime,jdbcType=TIMESTAMP},
+      start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      stop_time = #{record.stopTime,jdbcType=TIMESTAMP},
+      task_method = #{record.taskMethod,jdbcType=VARCHAR},
+      cron_expression = #{record.cronExpression,jdbcType=VARCHAR},
+      execu_count = #{record.execuCount,jdbcType=INTEGER},
+      fail_count = #{record.failCount,jdbcType=INTEGER},
+      miss_count = #{record.missCount,jdbcType=INTEGER},
+      execu_cycle = #{record.execuCycle,jdbcType=INTEGER},
+      cycle = #{record.cycle,jdbcType=INTEGER},
+      task_status = #{record.taskStatus,jdbcType=INTEGER},
+      create_user_id = #{record.createUserId,jdbcType=VARCHAR},
+      creadate = #{record.creadate,jdbcType=TIMESTAMP},
+      update_user_id = #{record.updateUserId,jdbcType=VARCHAR},
+      update_date = #{record.updateDate,jdbcType=TIMESTAMP},
+      job_group_name = #{record.jobGroupName,jdbcType=VARCHAR},
+      method = #{record.method,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mogateway.entity.Task">
+    update task
+    <set>
+      <if test="timedTaskName != null">
+        timed_task_name = #{timedTaskName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastExecuTime != null">
+        last_execu_time = #{lastExecuTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nextExecuTime != null">
+        next_execu_time = #{nextExecuTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="stopTime != null">
+        stop_time = #{stopTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taskMethod != null">
+        task_method = #{taskMethod,jdbcType=VARCHAR},
+      </if>
+      <if test="cronExpression != null">
+        cron_expression = #{cronExpression,jdbcType=VARCHAR},
+      </if>
+      <if test="execuCount != null">
+        execu_count = #{execuCount,jdbcType=INTEGER},
+      </if>
+      <if test="failCount != null">
+        fail_count = #{failCount,jdbcType=INTEGER},
+      </if>
+      <if test="missCount != null">
+        miss_count = #{missCount,jdbcType=INTEGER},
+      </if>
+      <if test="execuCycle != null">
+        execu_cycle = #{execuCycle,jdbcType=INTEGER},
+      </if>
+      <if test="cycle != null">
+        cycle = #{cycle,jdbcType=INTEGER},
+      </if>
+      <if test="taskStatus != null">
+        task_status = #{taskStatus,jdbcType=INTEGER},
+      </if>
+      <if test="createUserId != null">
+        create_user_id = #{createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="creadate != null">
+        creadate = #{creadate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null">
+        update_user_id = #{updateUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="jobGroupName != null">
+        job_group_name = #{jobGroupName,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null">
+        method = #{method,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where timed_task_id = #{timedTaskId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mogateway.entity.Task">
+    update task
+    set timed_task_name = #{timedTaskName,jdbcType=VARCHAR},
+      last_execu_time = #{lastExecuTime,jdbcType=TIMESTAMP},
+      next_execu_time = #{nextExecuTime,jdbcType=TIMESTAMP},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      stop_time = #{stopTime,jdbcType=TIMESTAMP},
+      task_method = #{taskMethod,jdbcType=VARCHAR},
+      cron_expression = #{cronExpression,jdbcType=VARCHAR},
+      execu_count = #{execuCount,jdbcType=INTEGER},
+      fail_count = #{failCount,jdbcType=INTEGER},
+      miss_count = #{missCount,jdbcType=INTEGER},
+      execu_cycle = #{execuCycle,jdbcType=INTEGER},
+      cycle = #{cycle,jdbcType=INTEGER},
+      task_status = #{taskStatus,jdbcType=INTEGER},
+      create_user_id = #{createUserId,jdbcType=VARCHAR},
+      creadate = #{creadate,jdbcType=TIMESTAMP},
+      update_user_id = #{updateUserId,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      job_group_name = #{jobGroupName,jdbcType=VARCHAR},
+      method = #{method,jdbcType=VARCHAR}
+    where timed_task_id = #{timedTaskId,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

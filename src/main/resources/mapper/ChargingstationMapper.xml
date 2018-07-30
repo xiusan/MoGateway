@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mogateway.mapper.ChargingstationMapper">
+  <resultMap id="BaseResultMap" type="com.mogateway.entity.Chargingstation">
+    <id column="charging_station_id" jdbcType="VARCHAR" property="chargingStationId" />
+    <result column="charging_station_name" jdbcType="VARCHAR" property="chargingStationName" />
+    <result column="charging_station_addr" jdbcType="VARCHAR" property="chargingStationAddr" />
+    <result column="enabled" jdbcType="BIT" property="enabled" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="create_dttm" jdbcType="TIMESTAMP" property="createDttm" />
+    <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
+    <result column="update_dttm" jdbcType="TIMESTAMP" property="updateDttm" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    charging_station_id, charging_station_name, charging_station_addr, enabled, create_user,
+    create_dttm, update_user, update_dttm
+  </sql>
+  <select id="selectByExample" parameterType="com.mogateway.entity.ChargingstationCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from chargingstation
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from chargingstation
+    where charging_station_id = #{chargingStationId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from chargingstation
+    where charging_station_id = #{chargingStationId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mogateway.entity.ChargingstationCriteria">
+    delete from chargingstation
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mogateway.entity.Chargingstation">
+    insert into chargingstation (charging_station_id, charging_station_name,
+      charging_station_addr, enabled, create_user, 
+      create_dttm, update_user, update_dttm
+      )
+    values (#{chargingStationId,jdbcType=VARCHAR}, #{chargingStationName,jdbcType=VARCHAR}, 
+      #{chargingStationAddr,jdbcType=VARCHAR}, #{enabled,jdbcType=BIT}, #{createUser,jdbcType=VARCHAR}, 
+      #{createDttm,jdbcType=TIMESTAMP}, #{updateUser,jdbcType=VARCHAR}, #{updateDttm,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mogateway.entity.Chargingstation">
+    insert into chargingstation
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="chargingStationId != null">
+        charging_station_id,
+      </if>
+      <if test="chargingStationName != null">
+        charging_station_name,
+      </if>
+      <if test="chargingStationAddr != null">
+        charging_station_addr,
+      </if>
+      <if test="enabled != null">
+        enabled,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="createDttm != null">
+        create_dttm,
+      </if>
+      <if test="updateUser != null">
+        update_user,
+      </if>
+      <if test="updateDttm != null">
+        update_dttm,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="chargingStationId != null">
+        #{chargingStationId,jdbcType=VARCHAR},
+      </if>
+      <if test="chargingStationName != null">
+        #{chargingStationName,jdbcType=VARCHAR},
+      </if>
+      <if test="chargingStationAddr != null">
+        #{chargingStationAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="enabled != null">
+        #{enabled,jdbcType=BIT},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDttm != null">
+        #{createDttm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDttm != null">
+        #{updateDttm,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mogateway.entity.ChargingstationCriteria" resultType="java.lang.Long">
+    select count(*) from chargingstation
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update chargingstation
+    <set>
+      <if test="record.chargingStationId != null">
+        charging_station_id = #{record.chargingStationId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chargingStationName != null">
+        charging_station_name = #{record.chargingStationName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.chargingStationAddr != null">
+        charging_station_addr = #{record.chargingStationAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enabled != null">
+        enabled = #{record.enabled,jdbcType=BIT},
+      </if>
+      <if test="record.createUser != null">
+        create_user = #{record.createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDttm != null">
+        create_dttm = #{record.createDttm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateUser != null">
+        update_user = #{record.updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateDttm != null">
+        update_dttm = #{record.updateDttm,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update chargingstation
+    set charging_station_id = #{record.chargingStationId,jdbcType=VARCHAR},
+      charging_station_name = #{record.chargingStationName,jdbcType=VARCHAR},
+      charging_station_addr = #{record.chargingStationAddr,jdbcType=VARCHAR},
+      enabled = #{record.enabled,jdbcType=BIT},
+      create_user = #{record.createUser,jdbcType=VARCHAR},
+      create_dttm = #{record.createDttm,jdbcType=TIMESTAMP},
+      update_user = #{record.updateUser,jdbcType=VARCHAR},
+      update_dttm = #{record.updateDttm,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mogateway.entity.Chargingstation">
+    update chargingstation
+    <set>
+      <if test="chargingStationName != null">
+        charging_station_name = #{chargingStationName,jdbcType=VARCHAR},
+      </if>
+      <if test="chargingStationAddr != null">
+        charging_station_addr = #{chargingStationAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="enabled != null">
+        enabled = #{enabled,jdbcType=BIT},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDttm != null">
+        create_dttm = #{createDttm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        update_user = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDttm != null">
+        update_dttm = #{updateDttm,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where charging_station_id = #{chargingStationId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mogateway.entity.Chargingstation">
+    update chargingstation
+    set charging_station_name = #{chargingStationName,jdbcType=VARCHAR},
+      charging_station_addr = #{chargingStationAddr,jdbcType=VARCHAR},
+      enabled = #{enabled,jdbcType=BIT},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_dttm = #{createDttm,jdbcType=TIMESTAMP},
+      update_user = #{updateUser,jdbcType=VARCHAR},
+      update_dttm = #{updateDttm,jdbcType=TIMESTAMP}
+    where charging_station_id = #{chargingStationId,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

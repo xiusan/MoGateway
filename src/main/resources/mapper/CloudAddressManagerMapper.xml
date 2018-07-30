@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mogateway.mapper.CloudAddressManagerMapper">
+  <resultMap id="BaseResultMap" type="com.mogateway.entity.CloudAddressManager">
+    <id column="cloud_id" jdbcType="VARCHAR" property="cloudId" />
+    <result column="kj_cloud_address" jdbcType="VARCHAR" property="kjCloudAddress" />
+    <result column="customer_cloud_address" jdbcType="VARCHAR" property="customerCloudAddress" />
+    <result column="is_synchronization" jdbcType="INTEGER" property="isSynchronization" />
+    <result column="is_certificate" jdbcType="INTEGER" property="isCertificate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    cloud_id, kj_cloud_address, customer_cloud_address, is_synchronization, is_certificate
+  </sql>
+  <select id="selectByExample" parameterType="com.mogateway.entity.CloudAddressManagerCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cloud_address_manager
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cloud_address_manager
+    where cloud_id = #{cloudId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from cloud_address_manager
+    where cloud_id = #{cloudId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mogateway.entity.CloudAddressManagerCriteria">
+    delete from cloud_address_manager
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mogateway.entity.CloudAddressManager">
+    insert into cloud_address_manager (cloud_id, kj_cloud_address, customer_cloud_address, 
+      is_synchronization, is_certificate)
+    values (#{cloudId,jdbcType=VARCHAR}, #{kjCloudAddress,jdbcType=VARCHAR}, #{customerCloudAddress,jdbcType=VARCHAR}, 
+      #{isSynchronization,jdbcType=INTEGER}, #{isCertificate,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mogateway.entity.CloudAddressManager">
+    insert into cloud_address_manager
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cloudId != null">
+        cloud_id,
+      </if>
+      <if test="kjCloudAddress != null">
+        kj_cloud_address,
+      </if>
+      <if test="customerCloudAddress != null">
+        customer_cloud_address,
+      </if>
+      <if test="isSynchronization != null">
+        is_synchronization,
+      </if>
+      <if test="isCertificate != null">
+        is_certificate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cloudId != null">
+        #{cloudId,jdbcType=VARCHAR},
+      </if>
+      <if test="kjCloudAddress != null">
+        #{kjCloudAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="customerCloudAddress != null">
+        #{customerCloudAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="isSynchronization != null">
+        #{isSynchronization,jdbcType=INTEGER},
+      </if>
+      <if test="isCertificate != null">
+        #{isCertificate,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mogateway.entity.CloudAddressManagerCriteria" resultType="java.lang.Long">
+    select count(*) from cloud_address_manager
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cloud_address_manager
+    <set>
+      <if test="record.cloudId != null">
+        cloud_id = #{record.cloudId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.kjCloudAddress != null">
+        kj_cloud_address = #{record.kjCloudAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerCloudAddress != null">
+        customer_cloud_address = #{record.customerCloudAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isSynchronization != null">
+        is_synchronization = #{record.isSynchronization,jdbcType=INTEGER},
+      </if>
+      <if test="record.isCertificate != null">
+        is_certificate = #{record.isCertificate,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cloud_address_manager
+    set cloud_id = #{record.cloudId,jdbcType=VARCHAR},
+      kj_cloud_address = #{record.kjCloudAddress,jdbcType=VARCHAR},
+      customer_cloud_address = #{record.customerCloudAddress,jdbcType=VARCHAR},
+      is_synchronization = #{record.isSynchronization,jdbcType=INTEGER},
+      is_certificate = #{record.isCertificate,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mogateway.entity.CloudAddressManager">
+    update cloud_address_manager
+    <set>
+      <if test="kjCloudAddress != null">
+        kj_cloud_address = #{kjCloudAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="customerCloudAddress != null">
+        customer_cloud_address = #{customerCloudAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="isSynchronization != null">
+        is_synchronization = #{isSynchronization,jdbcType=INTEGER},
+      </if>
+      <if test="isCertificate != null">
+        is_certificate = #{isCertificate,jdbcType=INTEGER},
+      </if>
+    </set>
+    where cloud_id = #{cloudId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mogateway.entity.CloudAddressManager">
+    update cloud_address_manager
+    set kj_cloud_address = #{kjCloudAddress,jdbcType=VARCHAR},
+      customer_cloud_address = #{customerCloudAddress,jdbcType=VARCHAR},
+      is_synchronization = #{isSynchronization,jdbcType=INTEGER},
+      is_certificate = #{isCertificate,jdbcType=INTEGER}
+    where cloud_id = #{cloudId,jdbcType=VARCHAR}
+  </update>
+</mapper>

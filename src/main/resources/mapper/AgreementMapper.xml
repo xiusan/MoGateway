@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mogateway.mapper.AgreementMapper">
+  <resultMap id="BaseResultMap" type="com.mogateway.entity.Agreement">
+    <id column="agreement_id" jdbcType="VARCHAR" property="agreementId" />
+    <result column="agreement_name" jdbcType="VARCHAR" property="agreementName" />
+    <result column="agreement_addr" jdbcType="VARCHAR" property="agreementAddr" />
+    <result column="enabled" jdbcType="BIT" property="enabled" />
+    <result column="agreement_sub_channel" jdbcType="VARCHAR" property="agreementSubChannel" />
+    <result column="agreement_pub_channel" jdbcType="VARCHAR" property="agreementPubChannel" />
+    <result column="agreement_home_url" jdbcType="VARCHAR" property="agreementHomeUrl" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="create_dttm" jdbcType="TIMESTAMP" property="createDttm" />
+    <result column="update_user" jdbcType="VARCHAR" property="updateUser" />
+    <result column="update_dttm" jdbcType="TIMESTAMP" property="updateDttm" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    agreement_id, agreement_name, agreement_addr, enabled, agreement_sub_channel, agreement_pub_channel, 
+    agreement_home_url, create_user, create_dttm, update_user, update_dttm
+  </sql>
+  <select id="selectByExample" parameterType="com.mogateway.entity.AgreementCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from agreement
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from agreement
+    where agreement_id = #{agreementId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from agreement
+    where agreement_id = #{agreementId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mogateway.entity.AgreementCriteria">
+    delete from agreement
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mogateway.entity.Agreement">
+    insert into agreement (agreement_id, agreement_name, agreement_addr, 
+      enabled, agreement_sub_channel, agreement_pub_channel, 
+      agreement_home_url, create_user, create_dttm, 
+      update_user, update_dttm)
+    values (#{agreementId,jdbcType=VARCHAR}, #{agreementName,jdbcType=VARCHAR}, #{agreementAddr,jdbcType=VARCHAR}, 
+      #{enabled,jdbcType=BIT}, #{agreementSubChannel,jdbcType=VARCHAR}, #{agreementPubChannel,jdbcType=VARCHAR}, 
+      #{agreementHomeUrl,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, #{createDttm,jdbcType=TIMESTAMP}, 
+      #{updateUser,jdbcType=VARCHAR}, #{updateDttm,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mogateway.entity.Agreement">
+    insert into agreement
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="agreementId != null">
+        agreement_id,
+      </if>
+      <if test="agreementName != null">
+        agreement_name,
+      </if>
+      <if test="agreementAddr != null">
+        agreement_addr,
+      </if>
+      <if test="enabled != null">
+        enabled,
+      </if>
+      <if test="agreementSubChannel != null">
+        agreement_sub_channel,
+      </if>
+      <if test="agreementPubChannel != null">
+        agreement_pub_channel,
+      </if>
+      <if test="agreementHomeUrl != null">
+        agreement_home_url,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="createDttm != null">
+        create_dttm,
+      </if>
+      <if test="updateUser != null">
+        update_user,
+      </if>
+      <if test="updateDttm != null">
+        update_dttm,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="agreementId != null">
+        #{agreementId,jdbcType=VARCHAR},
+      </if>
+      <if test="agreementName != null">
+        #{agreementName,jdbcType=VARCHAR},
+      </if>
+      <if test="agreementAddr != null">
+        #{agreementAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="enabled != null">
+        #{enabled,jdbcType=BIT},
+      </if>
+      <if test="agreementSubChannel != null">
+        #{agreementSubChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="agreementPubChannel != null">
+        #{agreementPubChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="agreementHomeUrl != null">
+        #{agreementHomeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDttm != null">
+        #{createDttm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDttm != null">
+        #{updateDttm,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mogateway.entity.AgreementCriteria" resultType="java.lang.Long">
+    select count(*) from agreement
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update agreement
+    <set>
+      <if test="record.agreementId != null">
+        agreement_id = #{record.agreementId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agreementName != null">
+        agreement_name = #{record.agreementName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agreementAddr != null">
+        agreement_addr = #{record.agreementAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enabled != null">
+        enabled = #{record.enabled,jdbcType=BIT},
+      </if>
+      <if test="record.agreementSubChannel != null">
+        agreement_sub_channel = #{record.agreementSubChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agreementPubChannel != null">
+        agreement_pub_channel = #{record.agreementPubChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agreementHomeUrl != null">
+        agreement_home_url = #{record.agreementHomeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUser != null">
+        create_user = #{record.createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDttm != null">
+        create_dttm = #{record.createDttm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateUser != null">
+        update_user = #{record.updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateDttm != null">
+        update_dttm = #{record.updateDttm,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update agreement
+    set agreement_id = #{record.agreementId,jdbcType=VARCHAR},
+      agreement_name = #{record.agreementName,jdbcType=VARCHAR},
+      agreement_addr = #{record.agreementAddr,jdbcType=VARCHAR},
+      enabled = #{record.enabled,jdbcType=BIT},
+      agreement_sub_channel = #{record.agreementSubChannel,jdbcType=VARCHAR},
+      agreement_pub_channel = #{record.agreementPubChannel,jdbcType=VARCHAR},
+      agreement_home_url = #{record.agreementHomeUrl,jdbcType=VARCHAR},
+      create_user = #{record.createUser,jdbcType=VARCHAR},
+      create_dttm = #{record.createDttm,jdbcType=TIMESTAMP},
+      update_user = #{record.updateUser,jdbcType=VARCHAR},
+      update_dttm = #{record.updateDttm,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mogateway.entity.Agreement">
+    update agreement
+    <set>
+      <if test="agreementName != null">
+        agreement_name = #{agreementName,jdbcType=VARCHAR},
+      </if>
+      <if test="agreementAddr != null">
+        agreement_addr = #{agreementAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="enabled != null">
+        enabled = #{enabled,jdbcType=BIT},
+      </if>
+      <if test="agreementSubChannel != null">
+        agreement_sub_channel = #{agreementSubChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="agreementPubChannel != null">
+        agreement_pub_channel = #{agreementPubChannel,jdbcType=VARCHAR},
+      </if>
+      <if test="agreementHomeUrl != null">
+        agreement_home_url = #{agreementHomeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createDttm != null">
+        create_dttm = #{createDttm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUser != null">
+        update_user = #{updateUser,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDttm != null">
+        update_dttm = #{updateDttm,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where agreement_id = #{agreementId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mogateway.entity.Agreement">
+    update agreement
+    set agreement_name = #{agreementName,jdbcType=VARCHAR},
+      agreement_addr = #{agreementAddr,jdbcType=VARCHAR},
+      enabled = #{enabled,jdbcType=BIT},
+      agreement_sub_channel = #{agreementSubChannel,jdbcType=VARCHAR},
+      agreement_pub_channel = #{agreementPubChannel,jdbcType=VARCHAR},
+      agreement_home_url = #{agreementHomeUrl,jdbcType=VARCHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_dttm = #{createDttm,jdbcType=TIMESTAMP},
+      update_user = #{updateUser,jdbcType=VARCHAR},
+      update_dttm = #{updateDttm,jdbcType=TIMESTAMP}
+    where agreement_id = #{agreementId,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

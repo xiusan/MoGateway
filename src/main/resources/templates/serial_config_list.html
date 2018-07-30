@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>电表配置</title>
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Data Tables -->
+    <link href="css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min.css" rel="stylesheet">
+
+    <script src="../js/cron/jquery.min.js"></script>
+    <script src="../js/cron/bootstrap.min.js"></script>
+    <script src="js/plugins/jeditable/jquery.jeditable.js"></script>
+    <script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+    <script src="js/content.min.js?v=1.0.0"></script>
+    <script src="js/local/serialConfig/serialConfig.js"></script>
+
+    <script src="../js/plugins/layer/laydate/laydate.js"></script>
+    <script src="js/plugins/iCheck/icheck.min.js"></script>
+
+
+    <script src="js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+    <script src="js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+
+    <script src="js/content.min.js?v=1.0.0"></script>
+    <script src="js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="js/plugins/validate/messages_zh.min.js"></script>
+    <script src="js/local/common/common.js"></script>
+
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>基本 <small>分类，查找</small></h5>
+                    <div class="ibox-tools">
+
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="col-sm-10" >
+                        <form>
+                        <select id="select-a" class="form-control m-b" style="width:200px;margin-right:20px;float: left"  name="serialName">
+                            <option value="">串口号</option>
+                        </select>
+                        <button id="search_btn" type="button"  style="margin-right:20px" class="btn btn-w-m btn-success">查询</button>
+                        <button type="reset" class="btn btn-w-m btn-default"   style="margin-right:20px" >重置</button>
+                        </form>
+                    </div>
+                    <div class="col-sm-10">
+                        <a data-toggle="modal" class="btn btn-w-m btn-success"   style="margin-right:20px"  href="form_basic.html#modal-form">添加</a>
+                        <button type="button" id="putAmmter"   style="margin-right:20px" onclick="getSerial()"  class="btn btn-w-m btn-success start">修改</button>
+                        <button type="button" id="delAmmter"   style="margin-right:20px" onclick="delSerial()"  class="btn btn-w-m btn-success stop">删除</button>
+                    </div>
+
+                    <!-- 表格 -->
+                        <table class="table table-striped table-bordered table-hover TadataTables-example datable"  id="serial-config-table" ></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-form"  class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>添加电表配置</h5>
+                                <div class="ibox-tools">
+                                    <a class="close-link">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                            &times;
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="form-group">
+                                    <label>串口号</label>
+                                    <select id="serialName" name="serialName" autocomplete="off" type="text" class="form-control">
+                                        <option value="" selected="selected">请选择</option>
+                                    </select>
+                                </div>
+                                <div class="form-group" >
+                                    <label>串口波特率：</label>
+                                    <input id="serialBaudRate" style="margin-top: 20px;" name="serialBaudRate" type="text"  class="form-control">
+                                </div>
+                                <div class="form-group" >
+                                    <label>串口校验位：</label>
+                                    <select id="serialCheckoutId" name="serialCheckoutId" autocomplete="off" type="text" class="form-control">
+                                        <option value="0" selected="selected">NONE</option>
+                                        <option value="1">ODD</option>
+                                        <option value="2">EVEN</option>
+                                        <option value="3">MARK</option>
+                                        <option value="4">SPACE</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-3 col-sm-8">
+                                        <button id="addInfo" class="btn btn-w-m btn-success" style="margin-right:20px;margin-top: 20px"  onclick="addInfo()" name="保存" value="保存"  type="button"><strong  >保存</strong>
+                                        </button>
+                                        <button  type="button" class="btn btn-w-m btn-success " style="margin-right:20px;margin-top: 20px"  data-dismiss="modal"> <strong  >取消</strong></button>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div id="modal-form1"  class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="row">
+                <div class="col-sm-12">
+
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title">
+                            <h5>修改电表配置</h5>
+                            <div class="ibox-tools">
+
+                                <a class="close-link">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                        &times;
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label"  style="float: left;margin-top: 20px;">串口号：</label>
+                                <div class="col-sm-8">
+                                    <input id="put-serialName" style="margin-top: 20px;" disabled="true" name="put-serialName" type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group" >
+                                <label class="col-sm-3 control-label" style="float: left;margin-top: 20px;">串口波特率：</label>
+                                <div class="col-sm-8">
+                                    <input id="put-serialBaudRate" style="margin-top: 20px;" name="put-serialBaudRate" type="text"  class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group" >
+                                <label class="col-sm-3 control-label" style="float: left;margin-top: 20px;">串口校验位：</label>
+                                <div class="col-sm-8">
+                                    <input id="put-serialCheckoutId" style="margin-top: 20px;" name="put-serialCheckoutId" type="text"  class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-8">
+                                    <button id="putTask1" class="btn btn-w-m btn-success"   style="margin-right:20px;margin-top: 20px"  onclick="putSerial()" value="保存" name="保存"   type="button"><strong  >保存</strong>
+                                    </button>
+                                    <button  type="button" class="btn btn-w-m btn-success "   style="margin-right:20px;margin-top: 20px"  data-dismiss="modal"> <strong  >取消</strong></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    class BstpTable{
+        constructor(obj) {
+            this.obj=obj;
+        }
+        inint(){
+            //---先销毁表格 ---
+            this.obj.bootstrapTable('destroy');
+            //---初始化表格,动态从服务器加载数据---
+            this.obj.bootstrapTable({
+                //【发出请求的基础信息】
+                url: '/serialConfig/serialConfigs',
+                method: 'post',
+                contentType: "application/x-www-form-urlencoded",
+                //【查询设置】
+                queryParamsType:'',
+
+                queryParams: queryParams,
+                //【其它设置】
+                locale:'zh-CN',//中文支持
+                pagination: true,//是否开启分页（*）
+                pageNumber:1,//初始化加载第一页，默认第一页
+                pageSize: 10,//每页的记录行数（*）
+                pageList: [10,50,100],//可供选择的每页的行数（*）
+                sidePagination: "server", //分页方式：client客户端分页，server服务端分页（*）
+                showRefresh:true,//刷新按钮
+                dataType: "json",
+                uniqueId: "serialName",
+                sortable: true,
+                sortOrder: "asc",                   //排序方式
+                showColumns: true,                  //是否显示所有的列（选择显示的列）
+                showRefresh: true,                  //是否显示刷新按钮
+                //bFilter: true,     //过滤功能
+                //bSort: true,     //排序功能
+                responseHandler: function(res) {
+                    return {
+                        "total": res.data.recordsTotal,//总页数
+                        "rows": res.data.list,   //数据
+                      //  "sortColumnsName": res.sort,      //排序列名
+                        //"sortOrder": res.order //排位命令（desc，asc）
+                    };
+                },
+                //【设置列】
+                columns: [
+                    {
+                        checkbox:true,
+                    },
+                    {field: 'serialName',title: '串口号',sortable: true, },
+                    {field: 'serialBaudRate',title: '串口波特率',sortable: true},
+                    {field: 'serialCheckoutId',title: '串口校验位',sortable: true},
+                ]
+            })
+        }
+    }
+
+    var bstpTable=new BstpTable($("table"));
+    bstpTable.inint({})
+    $('.fixed-table-header').remove();
+
+    //串口号
+    $(function(){
+        serialNames();
+    })
+
+
+
+
+
+    //请求服务数据时所传参数
+    function queryParams(params){
+        return{
+            pageNumber: params.pageNumber,
+            pageSize: params.pageSize,
+            serialName:$("#select-a option:selected").val()
+        }
+    }
+    //查询按钮事件
+    $('#search_btn').click(function(){
+        $('#serial-config-table').bootstrapTable('refresh', {url: '/serialConfig/serialConfigs'});
+    })
+
+
+</script>
+
+</body>
+
+</html>

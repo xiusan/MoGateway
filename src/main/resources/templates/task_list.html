@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>定时任务</title>
+
+    <link rel="shortcut icon" href="favicon.ico"> <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- Data Tables -->
+    <link href="css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/style.min.css" rel="stylesheet">
+
+    <script src="../js/cron/jquery.min.js"></script>
+    <script src="../js/cron/bootstrap.min.js"></script>
+    <script src="js/plugins/jeditable/jquery.jeditable.js"></script>
+    <script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+    <script src="js/content.min.js"></script>
+    <script src="js/local/task/task.js"></script>
+
+    <script src="../js/plugins/layer/laydate/laydate.js"></script>
+    <script src="js/plugins/iCheck/icheck.min.js"></script>
+
+
+    <script src="js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+    <script src="js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+
+
+
+
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>基本 <small>分类，查找</small></h5>
+                    <div class="ibox-tools">
+
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                    <div class="col-sm-10">
+                        <a data-toggle="modal" style="margin-right:20px" class="btn btn-w-m btn-success"  href="form_basic.html#modal-form">添加</a>
+                        <button type="button" style="margin-right:20px" id="putTask" class="btn btn-w-m btn-success start" onclick="getTask()" href="form_basic.html#modal-form1">修改</button>
+                        <button type="button" style="margin-right:20px" id="delTask" class="btn btn-w-m btn-success stop" onclick="delTask()">删除</button>
+                        <button type="button" style="margin-right:20px" id="stopTask" class="btn btn-w-m btn-success stop" onclick="stopTask()">暂停</button>
+                        <button type="button" style="margin-right:20px" id="recoveryTask" class="btn btn-w-m btn-success stop" onclick="recoveryTask()">恢复</button>
+                    </div>
+                    <!-- 表格 -->
+                    <table class="table table-striped table-bordered table-hover TadataTables-example datable"  id="task-table" ></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-form"  class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+                <div class="row">
+                    <div class="col-sm-12">
+
+                            <div class="ibox float-e-margins">
+                                <div class="ibox-title">
+                                    <h5>添加定时任务</h5>
+                                    <div class="ibox-tools">
+                                        <a class="close-link">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                &times;
+                                            </button>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="ibox-content">
+                                        <div class="form-group" >
+                                            <label class="col-sm-3 control-label"   style="float: left;margin-top: 20px;">任务名称：</label>
+
+                                            <div class="col-sm-8">
+                                                <input name="timedTaskName" style="margin-top: 20px;"  placeholder="请在这里输入任务名称"  type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <!--
+                                        <div class="form-group" >
+                                            <label class="col-sm-3 control-label"  style="float: left;margin-top: 20px;">开始时间：</label>
+
+                                            <div class="col-sm-8">
+                                                <div class="radio" >
+                                                    <label>
+                                                        <input id="cycle1" name="cycle"  type="radio" checked=""  class="form-control" value="0">一次性</label>
+                                                </div>
+                                                <div class="radio">
+                                                    <label>
+                                                        <input id="cycle2" name="cycle" type="radio" checked=""  class="form-control" value="1">周期性</label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        -->
+                                        <div class="form-group" >
+                                            <label class="col-sm-3 control-label" style="float: left;margin-top: 20px;">开始时间：</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="startTime" name="startTime"  style="margin-top: 20px;"  placeholder="YYYY-MM-DD hh:mm:ss" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                                            </div>
+                                        </div>
+                                        <div class="form-group" >
+                                            <label class="col-sm-3 control-label"   style="float: left;margin-top: 20px;">执行周期：</label>
+
+                                            <div class="col-sm-8" >
+                                                <input  id="cronExpression"  placeholder="请在这里输入cron表达式" style="margin-top: 20px;" name="cronExpression" type="text"   class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+
+                                            <label class="col-sm-3 control-label" style="float: left;margin-top: 20px;">过期时间：</label>
+                                            <div class="col-sm-8">
+                                                <input class="form-control" id="stopTime" name="stopTime"  style="margin-top: 20px;"  placeholder="YYYY-MM-DD hh:mm:ss" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                                            </div>
+                                        </div>
+                                    <!--
+                                            <div class="form-group" >
+                                            <label class="col-sm-3 control-label" style="float: left;margin-top: 20px;">执行job类：</label>
+
+                                            <div class="col-sm-8">
+                                                <input  id="taskMethod" style="margin-top: 20px;"  name="taskMethod" type="text"  class="form-control">
+                                            </div>
+                                        </div>
+                                    -->
+
+                                    <div class="form-group" >
+                                            <label class="col-sm-3 control-label"style="float: left;margin-top: 20px;">http方法：</label>
+
+                                            <div class="col-sm-8">
+                                                <input  id="method" style="margin-top: 20px;"   placeholder="请在这里输入URL地址"    name="method" type="text"  class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-3 col-sm-8">
+                                                <button id="addTask" style="margin-right:20px;margin-top: 20px"  class="btn btn-w-m btn-success"  onclick="addTask()" value="保存" name="保存"   type="button"><strong  >保存</strong>
+                                                </button>
+                                                <button  type="button" style="margin-right:20px;margin-top: 20px"  class="btn btn-w-m btn-success " data-dismiss="modal"> <strong  >取消</strong></button>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal-form1"  class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+                <div class="row">
+                    <div class="col-sm-12">
+
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>修改定时任务</h5>
+                                <div class="ibox-tools">
+
+                                    <a class="close-link">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                            &times;
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="ibox-content">
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label"  style="float: left;margin-top: 20px;">任务名称：</label>
+
+                                    <div class="col-sm-8">
+                                        <input id="put-timedTaskName" style="margin-top: 20px;"    placeholder="请在这里输入任务名称"    name="put-timedTaskName" type="text" class="form-control">
+                                        <input id="put-timedTaskId" name="put-timedTaskId" type="hidden" class="form-control">
+                                        <input id="put-jobGroupName" name="put-jobGroupName" type="hidden" class="form-control">
+                                        <input id="put-taskMethod" name="put-taskMethod" type="hidden" class="form-control">
+                                    </div>
+                                </div>
+                                <!--
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label"  style="float: left;margin-top: 20px;">开始时间：</label>
+                                    <div class="col-sm-8">
+                                        <div class="radio">
+                                            <label>
+                                                <input id="put-cycle1"   name="put-cycle"  type="radio" checked="" value="0">一次性</label>
+                                        </div>
+                                        <div class="radio">
+                                            <label>
+                                                <input id="put-cycle2"   name="put-cycle" type="radio"   value="1">周期性</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                -->
+                                <div class="form-group">
+
+
+
+                                    <label class="col-sm-3 control-label" style="float: left;margin-top: 20px;">选择时间：</label>
+                                    <div class="col-sm-8">
+                                        <input class="form-control" id="put-startTime" name="put-startTime"  style="margin-top: 20px;"  placeholder="YYYY-MM-DD hh:mm:ss" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label"style="float: left;margin-top: 20px;">执行周期：</label>
+
+                                    <div class="col-sm-8">
+                                        <input  id="put-cronExpression" style="margin-top: 20px;"  placeholder="请在这里输入cron表达式"    name="put-cronExpression" type="text"  class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+
+
+                                    <label class="col-sm-3 control-label" style="float: left;margin-top: 20px;">过期时间：</label>
+                                    <div class="col-sm-8">
+                                        <input class="form-control" id="put-stopTime" name="put-stopTime"  style="margin-top: 20px;"  placeholder="YYYY-MM-DD hh:mm:ss" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                                    </div>
+                                </div>
+                                <!--
+                                                               <div class="form-group">
+                                    <label class="col-sm-3 control-label"  style="float: left;margin-top: 20px;">执行job类：</label>
+
+                                    <div class="col-sm-8">
+                                        <input  id="put-taskMethod" style="margin-top: 20px;"   name="put-taskMethod" type="text"  class="form-control">
+                                    </div>
+                                </div>
+                                -->
+
+                                <div class="form-group">
+                                    <label class="col-sm-3 control-label" style="float: left;margin-top: 20px;">http方法：</label>
+
+                                    <div class="col-sm-8">
+                                        <input  id="put-method" style="margin-top: 20px;"    placeholder="请在这里输入URL地址"   name="put-method" type="text"  class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-3 col-sm-8">
+                                        <button id="putTask1" class="btn btn-w-m btn-success"   style="margin-right:20px;margin-top: 20px"  onclick="putTask()" value="保存" name="保存"   type="button"><strong  >保存</strong>
+                                        </button>
+                                        <button  type="button" class="btn btn-w-m btn-success "   style="margin-right:20px;margin-top: 20px"  data-dismiss="modal"> <strong  >取消</strong></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+    /**
+     var pageNum=1;
+     $(function(){
+        equipmentlist(pageNum);
+    })
+     */
+    class BstpTable{
+        constructor(obj) {
+            this.obj=obj;
+        }
+        inint(searchArgs){
+
+            //---先销毁表格 ---
+            this.obj.bootstrapTable('destroy');
+            //---初始化表格,动态从服务器加载数据---
+            this.obj.bootstrapTable({
+                //【发出请求的基础信息】
+                url: '/task/taskList',
+                method: 'post',
+                contentType: "application/x-www-form-urlencoded",
+                //【查询设置】
+                queryParamsType:'',
+                queryParams: queryParams,
+                //【其它设置】
+                locale:'zh-CN',//中文支持
+                pagination: true,//是否开启分页（*）
+                pageNumber:1,//初始化加载第一页，默认第一页
+                pageSize: 10,//每页的记录行数（*）
+                pageList: [10,50,100],//可供选择的每页的行数（*）
+                sidePagination: "server", //分页方式：client客户端分页，server服务端分页（*）
+                showRefresh:true,//刷新按钮
+                dataType: "json",
+                uniqueId: "timedTaskId",
+                sortable: true,
+                sortOrder: "asc",                   //排序方式
+                showColumns: true,                  //是否显示所有的列（选择显示的列）
+                showRefresh: true,                  //是否显示刷新按钮
+                //bFilter: true,     //过滤功能
+                //bSort: true,     //排序功能
+                responseHandler: function(res) {
+                    return {
+                        "total": res.data.recordsTotal,//总页数
+                        "rows": res.data.list,   //数据
+                        //  "sortColumnsName": res.sort,      //排序列名
+                        //"sortOrder": res.order //排位命令（desc，asc）
+                    };
+                },
+                //【设置列】
+                columns: [
+                    {
+                        checkbox:true,
+                    },
+                    {field: 'timedTaskName',title: '任务名称',sortable: true, },
+                    {field: 'lastExecuTime',title: '上次执行',sortable: true,
+                        formatter:function (value,row,index) {
+                            //日期时间戳转换
+                            var time = new Date(value);
+                            var y = time.getFullYear();//年
+                            var m = time.getMonth() + 1;//月
+                            var d = time.getDate();//日
+                            var h = time.getHours();//时
+                            var mm = time.getMinutes();//分
+                            var s = time.getSeconds();//秒
+                            return y+"-"+m+"-"+d+" "+h+":"+mm+":"+s;
+                        }
+
+                    },
+                    {field: 'nextExecuTime',title: '下次执行',sortable: true,
+                        formatter:function (value,row,index) {
+                            //日期时间戳转换
+                            var time = new Date(value);
+                            var y = time.getFullYear();//年
+                            var m = time.getMonth() + 1;//月
+                            var d = time.getDate();//日
+                            var h = time.getHours();//时
+                            var mm = time.getMinutes();//分
+                            var s = time.getSeconds();//秒
+                            return y+"-"+m+"-"+d+" "+h+":"+mm+":"+s;
+                        }
+                    },
+                    {field: 'startTime',title: '开始时间',sortable: true,
+                        formatter:function (value,row,index) {
+                            //日期时间戳转换
+                            var time = new Date(value);
+
+                            var y = time.getFullYear();//年
+                            var m = time.getMonth() + 1;//月
+                            var d = time.getDate();//日
+                            var h = time.getHours();//时
+                            var mm = time.getMinutes();//分
+                            var s = time.getSeconds();//秒
+                            //console.log(y);
+                            if(y == "1970"){
+                                return "-";
+                            }
+                            return y+"-"+m+"-"+d+" "+h+":"+mm+":"+s;
+                        }
+                    },
+                    {field: 'stopTime',title: '过期时间',sortable: true,
+                        formatter:function (value,row,index) {
+                            //日期时间戳转换
+                            var time = new Date(value);
+
+                            var y = time.getFullYear();//年
+                            var m = time.getMonth() + 1;//月
+                            var d = time.getDate();//日
+                            var h = time.getHours();//时
+                            var mm = time.getMinutes();//分
+                            var s = time.getSeconds();//秒
+                            //console.log(y);
+                            if(y == "1970"){
+                                return "-";
+                            }
+                            return y+"-"+m+"-"+d+" "+h+":"+mm+":"+s;
+                        }
+                    },
+                    {field: 'taskMethod',title: '执行job类',visible:false},
+                    {field: 'method',title: 'http方法',sortable: true},
+                    {field: 'cronExpression',title: 'cron表达式',sortable: true},
+                    {field: 'execuCount',title: '执行次数',sortable: true},
+                    {field: 'failCount',title: '失败次数',sortable: true},
+                    //{field: 'missCount',title: '错过次数',sortable: true},
+                    {field: 'taskStatus',title: '任务状态',sortable: true,
+                        formatter:function (value,row,index) {
+                            var str= value;
+
+                            var stop = "禁用";
+                            var run = "运行中";
+                            var overdue = "过期";
+                            var wait = "等待";
+                            if(str == "0"){
+                                return stop;
+                            }
+                            if(str == "1"){
+                                return run;
+                            }
+                            if(str == "2"){
+                                return overdue;
+                            }
+                            if(str == "3"){
+                                return wait;
+                            }
+                        }
+                    },
+                    {
+                        field: 'jobGroupName',
+                        title: '分组',
+                        visible: false
+                    }
+                ]
+            })
+        }
+    }
+    var bstpTable=new BstpTable($("table"));
+    bstpTable.inint({})
+    $('.fixed-table-header').remove();
+
+    $(".search").click(function(){
+        var searchArgs={
+            name:$("input[name='name']").val(),
+            age:$("input[name='age']").val()
+        }
+        bstpTable.inint(searchArgs)
+    })
+    //请求服务数据时所传参数
+    function queryParams(params){
+        return{
+            pageNum: params.pageNumber,
+            pageSize: params.pageSize,
+        }
+    }
+    //查询按钮事件
+    $('#search_btn').click(function(){
+        $('#task-table').bootstrapTable('refresh', {url: '/task/taskList'});
+    })
+</script>
+
+</body>
+
+</html>

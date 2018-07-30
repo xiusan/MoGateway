@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mogateway.mapper.AmmeterMapper">
+  <resultMap id="BaseResultMap" type="com.mogateway.entity.Ammeter">
+    <id column="ammeter_id" jdbcType="VARCHAR" property="ammeterId" />
+    <result column="ammeter_name" jdbcType="VARCHAR" property="ammeterName" />
+    <result column="agreement_id" jdbcType="VARCHAR" property="agreementId" />
+    <result column="enable" jdbcType="TINYINT" property="enable" />
+    <result column="create_dttm" jdbcType="TIMESTAMP" property="createDttm" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ammeter_id, ammeter_name, agreement_id, enable, create_dttm, create_user
+  </sql>
+  <select id="selectByExample" parameterType="com.mogateway.entity.AmmeterCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ammeter
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ammeter
+    where ammeter_id = #{ammeterId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ammeter
+    where ammeter_id = #{ammeterId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.mogateway.entity.AmmeterCriteria">
+    delete from ammeter
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.mogateway.entity.Ammeter">
+    insert into ammeter (ammeter_id, ammeter_name, agreement_id, 
+      enable, create_dttm, create_user
+      )
+    values (#{ammeterId,jdbcType=VARCHAR}, #{ammeterName,jdbcType=VARCHAR}, #{agreementId,jdbcType=VARCHAR}, 
+      #{enable,jdbcType=TINYINT}, #{createDttm,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mogateway.entity.Ammeter">
+    insert into ammeter
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="ammeterId != null">
+        ammeter_id,
+      </if>
+      <if test="ammeterName != null">
+        ammeter_name,
+      </if>
+      <if test="agreementId != null">
+        agreement_id,
+      </if>
+      <if test="enable != null">
+        enable,
+      </if>
+      <if test="createDttm != null">
+        create_dttm,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="ammeterId != null">
+        #{ammeterId,jdbcType=VARCHAR},
+      </if>
+      <if test="ammeterName != null">
+        #{ammeterName,jdbcType=VARCHAR},
+      </if>
+      <if test="agreementId != null">
+        #{agreementId,jdbcType=VARCHAR},
+      </if>
+      <if test="enable != null">
+        #{enable,jdbcType=TINYINT},
+      </if>
+      <if test="createDttm != null">
+        #{createDttm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.mogateway.entity.AmmeterCriteria" resultType="java.lang.Long">
+    select count(*) from ammeter
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ammeter
+    <set>
+      <if test="record.ammeterId != null">
+        ammeter_id = #{record.ammeterId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ammeterName != null">
+        ammeter_name = #{record.ammeterName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agreementId != null">
+        agreement_id = #{record.agreementId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enable != null">
+        enable = #{record.enable,jdbcType=TINYINT},
+      </if>
+      <if test="record.createDttm != null">
+        create_dttm = #{record.createDttm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createUser != null">
+        create_user = #{record.createUser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ammeter
+    set ammeter_id = #{record.ammeterId,jdbcType=VARCHAR},
+      ammeter_name = #{record.ammeterName,jdbcType=VARCHAR},
+      agreement_id = #{record.agreementId,jdbcType=VARCHAR},
+      enable = #{record.enable,jdbcType=TINYINT},
+      create_dttm = #{record.createDttm,jdbcType=TIMESTAMP},
+      create_user = #{record.createUser,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mogateway.entity.Ammeter">
+    update ammeter
+    <set>
+      <if test="ammeterName != null">
+        ammeter_name = #{ammeterName,jdbcType=VARCHAR},
+      </if>
+      <if test="agreementId != null">
+        agreement_id = #{agreementId,jdbcType=VARCHAR},
+      </if>
+      <if test="enable != null">
+        enable = #{enable,jdbcType=TINYINT},
+      </if>
+      <if test="createDttm != null">
+        create_dttm = #{createDttm,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ammeter_id = #{ammeterId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mogateway.entity.Ammeter">
+    update ammeter
+    set ammeter_name = #{ammeterName,jdbcType=VARCHAR},
+      agreement_id = #{agreementId,jdbcType=VARCHAR},
+      enable = #{enable,jdbcType=TINYINT},
+      create_dttm = #{createDttm,jdbcType=TIMESTAMP},
+      create_user = #{createUser,jdbcType=VARCHAR}
+    where ammeter_id = #{ammeterId,jdbcType=VARCHAR}
+  </update>
+  <select id="queryList" parameterType="com.mogateway.entity.AmmeterCriteria" resultMap="BaseResultMap">
+    select
+    amm.ammeter_id, amm.ammeter_name, amm.agreement_id, amm.enable, amm.create_dttm, amm.create_user,a.agreement_name AS agreementName
+    from ammeter amm
+    LEFT JOIN agreement a on a.agreement_id = amm.agreement_id
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>
