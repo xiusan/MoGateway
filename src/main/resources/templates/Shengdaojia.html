@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>添加商品信息</title>
+
+    <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../css/bootstrap/bootstrap-table.min.css" rel="stylesheet"/>
+    <link href="../css/bootstrap/bootstrap-select.min.css" rel="stylesheet"/>
+    <link href="../css/other/font-awesome.min.css" rel="stylesheet"/>
+    <link href="../css/other/animate.min.css" rel="stylesheet"/>
+    <link href="../css/other/style.min.css?v=4.1.0" rel="stylesheet"/>
+    <link href="../css/plugins/iCheck/custom.css" rel="stylesheet"/>
+    <link href="../css/plugins/sweetalert/sweetalert.css" rel="stylesheet"/>
+    <link href="../css/select.css" rel="stylesheet"/>
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>添加商品信息</h5>
+                </div>
+                <div class="ibox-content">
+                    <!-- 查询工具栏 -->
+                    <!-- 查询工具栏 -->
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <select id="chargingStationID" name="chargingStationID" class="selectpicker" data-live-search="true" title="充电站" onchange="change('#chargingStationID','#equipmentID',getEquipmentName)">
+                            </select>
+                        </div>
+                        <div id="equipmentIDDiv" class="form-group" hidden="hidden">
+                            <select id="equipmentID" name="equipmentID" class="selectpicker" data-live-search="true" title="充电桩" hidden="hidden">
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-primary btn-sm" onclick="search()" >
+                            查询
+                        </button>
+                        <button type="button" class="btn btn-sm" onclick="searchReset()" >
+                             重置
+                        </button>
+                    </div>
+                    <hr/>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="showSave()">
+                        <img src="../images/add_btn.png" height="16" width="16"/> 添加
+                    </button>
+                    <!--<button type="button" class="btn btn-primary btn-sm" onclick="showSave(1)">
+                        <img src="../images/edit_btn.png" height="16" width="16"/> 修改
+                    </button>-->
+                    <button type="button" class="btn btn-primary btn-sm" onclick="delConfirm()">
+                        <img src="../images/delete_btn.png" height="16" width="16"/> 删除
+                    </button>
+                    <table id="operatorShengdaojia"></table>
+                    <!--  添加框 -->
+
+                    <div class="modal inmodal" id="save" tabindex="-1" data-backdrop="static" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content animated bounceInRight">
+                                <div class="modal-header">
+                                    <button type="button" class="close" onclick="closeSave()">
+                                        <span aria-hidden="true">&times;</span>
+                                        <span class="sr-only">关闭</span>
+                                    </button>
+                                    <h4 class="modal-title">添加</h4>
+                                </div>
+                                <div class="modal-footer" style="text-align: left">
+                                    <form id="saveForm">
+
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label for="numId">商品ID</label>
+                                                    <input  id="numId" name="numId" type="text" required="" class="form-control" minlength="1" maxlength="100" placeholder="商品ID" title="商品ID"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label for="title">商品标题</label>
+                                                    <input  id="title" name="title" type="text" required="" class="form-control" minlength="1" maxlength="100" placeholder="商品标题" title="商品标题"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label for="pictUrl">商品主图</label>
+                                                    <input  id="pictUrl" name="pictUrl" type="text" required="" class="form-control" minlength="1" maxlength="100" placeholder="商品主图" title="商品主图"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label for="smallImages">商品小图列表</label>
+                                                    <input  id="smallImages" name="smallImages" type="text" required="" class="form-control" minlength="1" maxlength="100" placeholder="商品小图列表" title="商品小图列表"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label for="reservePrice">商品一口价格</label>
+                                                    <input  id="reservePrice" name="reservePrice" type="text" required="" class="form-control" minlength="1" maxlength="100" placeholder="商品一口价格" title="商品一口价格"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label for="zkFinalPrice">商品折扣价格</label>
+                                                    <input  id="zkFinalPrice" name="zkFinalPrice" type="text" required="" class="form-control" minlength="1" maxlength="100" placeholder="商品折扣价格" title="商品折扣价格"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label for="userType">卖家类型</label>
+                                                    <input  id="userType" name="userType" type="text" required="" class="form-control" minlength="1" maxlength="100" placeholder="卖家类型" title="卖家类型"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label for="provcity">宝贝所在地</label>
+                                                    <input  id="provcity" name="provcity" type="text" required="" class="form-control" minlength="1" maxlength="100" placeholder="宝贝所在地" title="宝贝所在地"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label for="itemUrl">商品地址</label>
+                                                    <input  id="itemUrl" name="itemUrl" type="text" required="" class="form-control" minlength="1" maxlength="100" placeholder="商品地址" title="商品地址"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label for="nick">卖家昵称</label>
+                                                    <input  id="nick" name="nick" type="text" required="" class="form-control" minlength="1" maxlength="100" placeholder="卖家昵称" title="卖家昵称"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label for="sellerId">卖家id</label>
+                                                    <input  id="sellerId" name="sellerId" type="text" required="" class="form-control" minlength="1" maxlength="100" placeholder="卖家id" title="卖家id"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label for="volume">30天销量</label>
+                                                    <input  id="volume" name="volume" type="text" required="" class="form-control" minlength="1" maxlength="100" placeholder="30天销量" title="30天销量"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label for="creatTime">创建时间</label>
+                                                    <input  id="creatTime" name="creatTime" type="text" required="" class="form-control" minlength="1" maxlength="100" placeholder="创建时间" title="创建时间"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label for="popularity">人气</label>
+                                                    <input  id="popularity" name="popularity" type="text" required="" class="form-control" minlength="1" maxlength="100" placeholder="人气" title="人气"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label for="voucherAddress">领券地址</label>
+                                                    <input  id="voucherAddress" name="voucherAddress" type="text" required="" class="form-control" minlength="1" maxlength="100" placeholder="领券地址" title="领券地址"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <div class="fg-line">
+                                                    <label for="creatUser">创建人</label>
+                                                    <input  id="creatUser" name="creatUser" type="text" required="" class="form-control" minlength="1" maxlength="100" placeholder="创建人" title="创建人"/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-12" style="text-align: right">
+                                            <button type="button" class="btn" onclick="closeSave()">
+                                                <img src="../images/close_btn.png" height="16" width="16"/> 关闭
+                                            </button>
+                                            <button type="button" class="btn btn-primary" onclick="save()">
+                                                <img src="../images/save_btn.png" height="16" width="16"/> 保存
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../js/cron/jquery.min.js"></script>
+
+<script src="../js/cron/bootstrap.min.js"></script>
+<script src="../js/bootstrap/bootstrap-table.js"></script>
+<script src="../js/bootstrap/bootstrap-table-zh-CN.min.js"></script>
+<script src="../js/bootstrap/bootstrap-select.min.js"></script>
+
+<script src="../js/plugins/iCheck/icheck.min.js"></script>
+<script src="../js/plugins/layer/laydate/laydate.js"></script>
+<script src="../js/plugins/layer/layer.min.js"></script>
+<script src="../js/plugins/sweetalert/sweetalert.min.js"></script>
+<script src="../js/plugins/sweetalert/sweetalert-dev.js"></script>
+
+<script src="../js/other/content.min.js?v=1.0.0"></script>
+<script src="../js/other/contabs.min.js"></script>
+
+<script src="../js/common.js"></script>
+<script src="../js/local/common/messageContent.js"></script>
+
+<script src="../js/Shengdaojia/Shengdaojia.js"></script>
+<script src="../js/Shengdaojia/ShengdaojiaOperate.js"></script>
+
+
+</body>
+
+</html>

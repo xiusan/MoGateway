@@ -13,7 +13,7 @@ import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 /**
  * Created by Administrator on 2018-04-20.
  */
-@Configuration
+//@Configuration
 public class RedisSubListenerConfig {
 
     @Value("${spring.redis.address}")
@@ -27,7 +27,7 @@ public class RedisSubListenerConfig {
     private RedisUtil redisUtil;
 
     //初始化监听器
-    @Bean
+   /* @Bean
     RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory,
                                             EventReceiver eventReceiver,
                                             ProcessReceiver processReceiver,
@@ -36,7 +36,7 @@ public class RedisSubListenerConfig {
         container.setConnectionFactory(connectionFactory);
         container.addMessageListener(eventReceiver, new PatternTopic(eventSubChannel));
         return container;
-    }
+    }*/
 
     //使用默认的工厂初始化redis操作模板
     @Bean
