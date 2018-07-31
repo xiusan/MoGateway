@@ -1,7 +1,6 @@
 package com.mogateway.redis;
 
 import com.mogateway.entity.EventRecord;
-import com.mogateway.service.EventRecordService;
 import com.mogateway.util.CommonUtils;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +16,6 @@ public class EventReceiver implements MessageListener {
 
     @Autowired
     private RedisUtil redisUtil;
-
-    @Autowired
-    private EventRecordService eventRecordService;
 
     @Override
     public void onMessage(Message message, byte[] pattern) {
@@ -38,6 +34,5 @@ public class EventReceiver implements MessageListener {
         if (json.has("eventDTTM")) {
             eventRecord.setEventDTTM(CommonUtils.parseDate(json.getString("eventDTTM"), "yyyy-MM-dd HH:mm:ss"));
         }
-        eventRecordService.addEventRecord(eventRecord);
     }
 }
